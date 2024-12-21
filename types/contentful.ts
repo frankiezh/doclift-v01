@@ -1,6 +1,39 @@
 import type { Entry, Asset } from 'contentful'
 
-export interface TypeHomePage {
+interface FeatureFields {
+  title: string
+  description: string
+  icon: Asset
+}
+
+export interface TypeFeature {
+  contentTypeId: 'feature'
+  fields: FeatureFields
+}
+
+interface StatisticFields {
+  value: string
+  label: string
+}
+
+export interface TypeStatistic {
+  contentTypeId: 'statistic'
+  fields: StatisticFields
+}
+
+interface TestimonialFields {
+  name: string
+  role: string
+  quote: string
+  image: Asset
+}
+
+export interface TypeTestimonial {
+  contentTypeId: 'testimonial'
+  fields: TestimonialFields
+}
+
+interface HomePageFields {
   title: string
   heroTitle: string
   heroDescription: string
@@ -9,21 +42,8 @@ export interface TypeHomePage {
   testimonials: Entry<TypeTestimonial>[]
 }
 
-export interface TypeFeature {
-  title: string
-  description: string
-  icon: Asset
-}
-
-export interface TypeStatistic {
-  value: string
-  label: string
-}
-
-export interface TypeTestimonial {
-  name: string
-  role: string
-  quote: string
-  image: Asset
+export interface TypeHomePage {
+  contentTypeId: 'homePage'
+  fields: HomePageFields
 }
 
