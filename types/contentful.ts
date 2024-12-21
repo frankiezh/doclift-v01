@@ -1,15 +1,21 @@
-import type { Entry, Asset, EntrySkeletonType } from 'contentful'
+import type { Entry, Asset, EntrySkeletonType, ChainModifiers } from 'contentful'
+
+interface AssetFile {
+  url: string
+}
+
+interface AssetFields {
+  file: AssetFile
+}
+
+interface ContentfulAsset {
+  fields: AssetFields
+}
 
 export interface TypeFeatureFields {
   title: string
   description: string
-  icon: {
-    fields: {
-      file: {
-        url: string
-      }
-    }
-  }
+  icon: ContentfulAsset
 }
 
 export interface TypeFeature extends EntrySkeletonType {
@@ -37,13 +43,7 @@ export interface TypeTestimonialFields {
   name: string
   role: string
   quote: string
-  image: {
-    fields: {
-      file: {
-        url: string
-      }
-    }
-  }
+  image: ContentfulAsset
 }
 
 export interface TypeTestimonial extends EntrySkeletonType {
