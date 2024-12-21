@@ -1,49 +1,41 @@
-import type { Entry, Asset } from 'contentful'
+import type { Entry, Asset, EntrySkeletonType } from 'contentful'
 
-interface FeatureFields {
-  title: string
-  description: string
-  icon: Asset
-}
-
-export interface TypeFeature {
+export interface TypeFeature extends EntrySkeletonType {
   contentTypeId: 'feature'
-  fields: FeatureFields
+  fields: {
+    title: string
+    description: string
+    icon: Asset
+  }
 }
 
-interface StatisticFields {
-  value: string
-  label: string
-}
-
-export interface TypeStatistic {
+export interface TypeStatistic extends EntrySkeletonType {
   contentTypeId: 'statistic'
-  fields: StatisticFields
+  fields: {
+    value: string
+    label: string
+  }
 }
 
-interface TestimonialFields {
-  name: string
-  role: string
-  quote: string
-  image: Asset
-}
-
-export interface TypeTestimonial {
+export interface TypeTestimonial extends EntrySkeletonType {
   contentTypeId: 'testimonial'
-  fields: TestimonialFields
+  fields: {
+    name: string
+    role: string
+    quote: string
+    image: Asset
+  }
 }
 
-interface HomePageFields {
-  title: string
-  heroTitle: string
-  heroDescription: string
-  features: Entry<TypeFeature>[]
-  statistics: Entry<TypeStatistic>[]
-  testimonials: Entry<TypeTestimonial>[]
-}
-
-export interface TypeHomePage {
+export interface TypeHomePage extends EntrySkeletonType {
   contentTypeId: 'homePage'
-  fields: HomePageFields
+  fields: {
+    title: string
+    heroTitle: string
+    heroDescription: string
+    features: Entry<TypeFeature>[]
+    statistics: Entry<TypeStatistic>[]
+    testimonials: Entry<TypeTestimonial>[]
+  }
 }
 

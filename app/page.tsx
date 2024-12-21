@@ -1,8 +1,12 @@
 import React from 'react'
 import { getHomePage } from '@/lib/contentful'
-import type { TypeHomePage, TypeStatistic, TypeTestimonial } from '@/types/contentful'
+import type { TypeHomePage, TypeStatistic, TypeTestimonial, TypeFeature } from '@/types/contentful'
 import type { Entry } from 'contentful'
 import { Features } from '@/components/features'
+
+function isValidArray<T>(arr: any): arr is T[] {
+  return Array.isArray(arr) && arr.length > 0
+}
 
 export default async function Home() {
   try {
@@ -16,7 +20,19 @@ export default async function Home() {
       )
     }
 
-    const { title, heroTitle, heroDescription, features, statistics, testimonials } = page.fields
+    const entry = page as Entry<TypeHomePage>
+    const { 
+      title = '', 
+      heroTitle = '', 
+      heroDescription = '', 
+      features = [], 
+      statistics = [], 
+      testimonials = [] 
+    } = entry.fields
+
+    const validFeatures = features as Entry<TypeFeature>[]
+    const validStatistics = statistics as Entry<TypeStatistic>[]
+    const validTestimonials = testimonials as Entry<TypeTestimonial>[]
 
     return (
       <main className="container mx-auto px-4">
@@ -26,43 +42,37 @@ export default async function Home() {
           <p className="mt-4">{String(heroDescription)}</p>
         </section>
 
-        {Array.isArray(features) && features.length > 0 && (
-          <Features data={features} />
+        {validFeatures.length > 0 && (
+          <Features data={validFeatures} />
         )}
 
-        {Array.isArray(statistics) && statistics.length > 0 && (
+        {validStatistics.length > 0 && (
           <section className="py-10 bg-gray-50">
             <div className="container mx-auto">
               <h3 className="text-2xl font-bold mb-6">Statistics</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {statistics.map((stat: Entry<TypeStatistic>) => {
-                  const { value, label } = stat.fields
-                  return (
-                    <div key={stat.sys.id} className="text-center">
-                      <div className="text-3xl font-bold">{String(value)}</div>
-                      <div className="text-gray-600">{String(label)}</div>
-                    </div>
-                  )
-                })}
+                {validStatistics.map((stat) => (
+                  <div key={stat.sys.id} className="text-center">
+                    <div className="text-3xl font-bold">{String(stat.fields.value)}</div>
+                    <div className="text-gray-600">{String(stat.fields.label)}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
         )}
 
-        {Array.isArray(testimonials) && testimonials.length > 0 && (
+        {validTestimonials.length > 0 && (
           <section className="py-10">
             <h3 className="text-2xl font-bold mb-6">Testimonials</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {testimonials.map((testimonial: Entry<TypeTestimonial>) => {
-                const { quote, name, role } = testimonial.fields
-                return (
-                  <div key={testimonial.sys.id} className="p-6 border rounded-lg">
-                    <blockquote className="text-lg italic mb-4">{String(quote)}</blockquote>
-                    <div className="font-bold">{String(name)}</div>
-                    <div className="text-gray-600">{String(role)}</div>
-                  </div>
-                )
-              })}
+              {validTestimonials.map((testimonial) => (
+                <div key={testimonial.sys.id} className="p-6 border rounded-lg">
+                  <blockquote className="text-lg italic mb-4">{String(testimonial.fields.quote)}</blockquote>
+                  <div className="font-bold">{String(testimonial.fields.name)}</div>
+                  <div className="text-gray-600">{String(testimonial.fields.role)}</div>
+                </div>
+              ))}
             </div>
           </section>
         )}
