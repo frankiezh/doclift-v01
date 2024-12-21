@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "setup-contentful": "ts-node --project tsconfig.json scripts/contentful-migration.ts"
+    "setup-contentful": "ts-node --project tsconfig.json scripts/contentful-migration.ts",
+    "populate-contentful": "ts-node --project tsconfig.json scripts/populate-contentful.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.1",
