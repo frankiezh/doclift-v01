@@ -1,5 +1,7 @@
 import React from 'react'
 import { getHomePage } from '@/lib/contentful'
+import type { TypeHomePage } from '@/types/contentful'
+import type { Entry } from 'contentful'
 
 export default async function Home() {
   try {
@@ -13,7 +15,7 @@ export default async function Home() {
       )
     }
 
-    const { title, heroTitle, heroDescription, features, statistics, testimonials } = page.fields
+    const { title, heroTitle, heroDescription, features, statistics, testimonials } = page.fields as TypeHomePage
 
     return (
       <main className="container mx-auto px-4">
